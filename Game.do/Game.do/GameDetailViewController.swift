@@ -63,18 +63,28 @@ class GameDetailViewController: UIViewController{
                 self.imageHasChanged = true
             }
         }
+
         if let platformIds = gamePlatformIds {
             GameHandler.shared.getPlatformsByPlatformIds(platformIds) { (gamePlatforms) in
-                self.platformTagsCallCompleted = true
-                self.gamePlatforms = gamePlatforms
-                print(gamePlatforms[0].name)
+                DispatchQueue.main.async {
+                    self.platformTagsCallCompleted = true
+                    self.gamePlatforms = gamePlatforms
+                    print(gamePlatforms[0].name)
+                    self.generatePlatformText()
+                }
+                
             }
         }
         if let genres = genreIds {
             GameHandler.shared.getGenresByGenreIds(genres) { (genres) in
-                self.genreTagsCallCompleted = true
-                self.genres = genres
-                print(genres[0].name)
+                DispatchQueue.main.async {
+                    self.genreTagsCallCompleted = true
+                    self.genres = genres
+                    print(genres[0].name)
+                    
+                    self.generateGenreText()
+                }
+                
             }
         }
         if let modeIds = gameModeIds {
@@ -122,7 +132,7 @@ class GameDetailViewController: UIViewController{
         save()
     }
         
-  /*  private func generateGenreText(){
+    private func generateGenreText(){
         if let gameGenres = genres{
             var genreText = ""
             for genre in gameGenres{
@@ -131,9 +141,9 @@ class GameDetailViewController: UIViewController{
             }
             genresLabel.text = genreText
         }
-    }*/
+    }
     
-   /* private func generatePlatformText(){
+    private func generatePlatformText(){
         if let consoles = gamePlatforms{
             var platformText = ""
             for console in consoles {
@@ -142,7 +152,7 @@ class GameDetailViewController: UIViewController{
             }
             platformsLabel.text = platformText
         }
-    }*/
+    }
     
     private func updateImageView() {
        if let gameImage = gameCover {
@@ -187,23 +197,24 @@ class GameDetailViewController: UIViewController{
             /*if(genreIds?.count ?? 0 > 0){
               genresLabel.text = String(genreIds![0])
             }*/
-            if let gameGenres = genres{
+            /*if let gameGenres = genres{
                 var genreText = ""
+                print(gameGenres[0].name)
                 for genre in gameGenres{
                     genreText.append(genre.name)
                     genreText.append(", ")
                 }
                 genresLabel.text = genreText
-            }
+            }*/
             
-            if let consoles = gamePlatforms{
+            /*if let consoles = gamePlatforms{
                 var platformText = ""
                 for console in consoles {
                     platformText.append(console.name)
                     platformText.append(", ")
                 }
                 platformsLabel.text = platformText
-            }
+            }*/
             /*for item in gamePlatforms!{
                 genresLabel.text!+=(item.name+", ")
             }*/
